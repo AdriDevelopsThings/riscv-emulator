@@ -8,7 +8,7 @@ pub trait TypeInstruction {
 /// get a value of type $type with the size of $size at position $shift (counted from the right) of $instruction
 macro_rules! get_from_instruction {
     ($instruction:expr, $size:tt, $shift:tt, $type:ty) => {
-        ($instruction & (u32::pow(2, $size) - 1) >> $shift) as $type
+        ($instruction >> $shift & (u32::pow(2, $size) - 1)) as $type
     };
 }
 

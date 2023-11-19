@@ -8,7 +8,7 @@ mod registers;
 pub struct Cpu {
     // The cpu has only 63 register because the first register contains 0x0
     registers: [u64; 63],
-    bus: Bus
+    bus: Bus,
 }
 
 impl Display for Cpu {
@@ -17,7 +17,7 @@ impl Display for Cpu {
         writeln!(f, "x0={:16X}", 0)?;
         for (i, register) in self.registers.iter().enumerate() {
             if i < 62 {
-                write!(f, "x{}", i+ 1)?;
+                write!(f, "x{}", i + 1)?;
             } else {
                 write!(f, "pc")?;
             }

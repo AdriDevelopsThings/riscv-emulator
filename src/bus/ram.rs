@@ -8,9 +8,7 @@ impl Ram {
     pub fn new(size: usize, code: Vec<u8>) -> Self {
         let mut ram: Vec<u8> = vec![0; size];
         ram.splice(..code.len(), code);
-        Self {
-            ram
-        }
+        Self { ram }
     }
 }
 

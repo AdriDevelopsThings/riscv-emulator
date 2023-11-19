@@ -1,4 +1,4 @@
-use crate::bus::{BusComponent, Bus, RAM_BASE};
+use crate::bus::{Bus, BusComponent, RAM_BASE};
 
 use super::Cpu;
 
@@ -11,7 +11,7 @@ impl Cpu {
     pub fn new(bus: Bus) -> Self {
         let mut cpu = Cpu {
             registers: [0; 63],
-            bus
+            bus,
         };
         // set program counter to address where the ram starts
         cpu.registers[62] = RAM_BASE;

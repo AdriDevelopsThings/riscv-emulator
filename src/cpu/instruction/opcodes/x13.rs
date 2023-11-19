@@ -1,5 +1,8 @@
 use crate::cpu::{
-    instruction::{instruction_type::{parse_funct3, ITypeInstruction, TypeInstruction}, Instruction},
+    instruction::{
+        instruction_type::{parse_funct3, ITypeInstruction, TypeInstruction},
+        Instruction,
+    },
     Cpu,
 };
 

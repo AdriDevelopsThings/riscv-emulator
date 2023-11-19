@@ -20,7 +20,7 @@ pub struct Bus {
 impl Bus {
     pub fn new(ram_size: usize, code: Vec<u8>) -> Self {
         Bus {
-            ram: Ram::new(ram_size, code)
+            ram: Ram::new(ram_size, code),
         }
     }
 }

@@ -7,6 +7,10 @@ pub fn i12_to_u64(x: u16) -> u64 {
     }
 }
 
+pub fn i12_to_u64_unsigned(x: u16) -> u64 {
+    (x & 0x7FF) as u64
+}
+
 /// converts a u64 that can be interpreted as an u64 to a signed 12 bit integer stored in an u16
 pub fn u64_to_i12(x: u64) -> u16 {
     let mut val = (x & 0x0000_0000_0000_07ff) as u16;

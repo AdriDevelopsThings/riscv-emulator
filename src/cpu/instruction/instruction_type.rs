@@ -27,6 +27,14 @@ pub struct ITypeInstruction {
     pub imm: u16,
 }
 
+pub struct SpecialITypeInstruction {
+    pub rd: usize,
+    pub funct3: u8,
+    pub rs1: usize,
+    pub imm_1: u8,
+    pub imm_2: u8,
+}
+
 pub struct STypeInstruction {
     pub imm_1: u8,
     pub funct3: u8,
@@ -67,6 +75,18 @@ impl TypeInstruction for ITypeInstruction {
             funct3: parse_funct3(instruction),
             rs1: get_from_instruction!(instruction, 5, 15, usize),
             imm: get_from_instruction!(instruction, 12, 20, u16),
+        }
+    }
+}
+
+impl TypeInstruction for SpecialITypeInstruction {
+    fn parse_instruction(instruction: Instruction) -> Self {
+        Self {
+            rd: parse_rd(instruction),
+            funct3: parse_funct3(instruction),
+            rs1: get_from_instruction!(instruction, 5, 15, usize),
+            imm_1: get_from_instruction!(instruction, 5, 20, u8),
+            imm_2: get_from_instruction!(instruction, 7, 25, u8),
         }
     }
 }

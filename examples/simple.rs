@@ -13,8 +13,8 @@ fn main() {
     let mut cpu = Cpu::new(Bus::new(1024 * 1024, code));
     loop {
         let ret = cpu.run_next_instruction();
-        if ret.is_err() {
-            println!("Error:\n{cpu}");
+        if let Err(e) = ret {
+            println!("Error: {e:?}\n{cpu}");
             break;
         }
     }

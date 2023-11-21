@@ -3,20 +3,24 @@ use crate::{
         instruction_type::{parse_funct3, RTypeInstruction, TypeInstruction},
         Instruction,
     },
+    exception::RiscVException,
     Cpu,
 };
 
-pub fn run_x33_instruction(cpu: &mut Cpu, instruction: Instruction) -> Result<(), ()> {
+pub fn run_x33_instruction(cpu: &mut Cpu, instruction: Instruction) -> Result<(), RiscVException> {
     let funct3 = parse_funct3(instruction);
     match funct3 {
         0x0 => run_x33_x0_instruction(cpu, RTypeInstruction::parse_instruction(instruction)),
-        _ => Err(()),
+        _ => Err(RiscVException::IllegalInstruction),
     }
 }
 
 // Run an instruction with opcode=0110011 and funct3=000
 // ADD / SUB rs1 (+/-) rs2
-fn run_x33_x0_instruction(cpu: &mut Cpu, instruction: RTypeInstruction) -> Result<(), ()> {
+fn run_x33_x0_instruction(
+    cpu: &mut Cpu,
+    instruction: RTypeInstruction,
+) -> Result<(), RiscVException> {
     let rs1 = cpu.read_register(instruction.rs1)?;
     let rs2 = cpu.read_register(instruction.rs2)?;
     cpu.write_register(
@@ -30,7 +34,7 @@ fn run_x33_x0_instruction(cpu: &mut Cpu, instruction: RTypeInstruction) -> Resul
                 // SUB
                 Ok(rs1.wrapping_sub(rs2))
             }
-            _ => Err(()),
+            _ => Err(RiscVException::IllegalInstruction),
         }?,
     )
 }

@@ -1,4 +1,7 @@
-use crate::bus::{Bus, BusComponent, RAM_BASE};
+use crate::{
+    bus::{Bus, BusComponent, RAM_BASE},
+    exception::RiscVException,
+};
 
 use super::Cpu;
 
@@ -18,12 +21,12 @@ impl Cpu {
         cpu
     }
 
-    fn fetch_instruction(&self) -> Result<Instruction, ()> {
+    fn fetch_instruction(&self) -> Result<Instruction, RiscVException> {
         // read 32 bit value at the possition of the program counter from the ram
         Ok(self.bus.read(self.registers[62], 32)? as Instruction)
     }
 
-    pub fn run_next_instruction(&mut self) -> Result<(), ()> {
+    pub fn run_next_instruction(&mut self) -> Result<(), RiscVException> {
         // fetch the next instruction
         let instruction = self.fetch_instruction()?;
         self.run_instruction(instruction)?;

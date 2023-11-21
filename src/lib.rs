@@ -1,5 +1,6 @@
 mod bus;
 mod cpu;
+mod exception;
 mod utils;
 
 #[cfg(test)]

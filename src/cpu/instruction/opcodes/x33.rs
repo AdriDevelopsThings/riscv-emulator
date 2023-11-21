@@ -24,11 +24,11 @@ fn run_x33_x0_instruction(cpu: &mut Cpu, instruction: RTypeInstruction) -> Resul
         match instruction.funct7 {
             0x0 => {
                 // ADD
-                Ok(rs1 + rs2)
+                Ok(rs1.wrapping_add(rs2))
             }
             0x20 => {
                 // SUB
-                Ok(rs1 - rs2)
+                Ok(rs1.wrapping_sub(rs2))
             }
             _ => Err(()),
         }?,

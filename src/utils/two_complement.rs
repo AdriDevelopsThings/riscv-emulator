@@ -1,11 +1,19 @@
-pub fn parse_two_complement_64(number: u64) -> i64 {
-    if number >> 63 & 1 == 0 {
-        -(!number as i64 + 1)
+/// converts a signed 12 bit integer to an u64 integer that can be interpreted as an i64
+pub fn i12_to_u64(x: u16) -> u64 {
+    if x & 0x0800 != 0 {
+        (x as i64 - 0x1000) as u64
     } else {
-        number as i64
+        x as u64
     }
 }
 
-pub fn into_two_complement_64(number: i64) -> u64 {
-    number as u64
+/// converts a u64 that can be interpreted as an u64 to a signed 12 bit integer stored in an u16
+pub fn u64_to_i12(x: u64) -> u16 {
+    let mut val = (x & 0x0000_0000_0000_07ff) as u16;
+
+    if (x as i64) < 0 {
+        val |= 0x0800;
+    }
+
+    val
 }

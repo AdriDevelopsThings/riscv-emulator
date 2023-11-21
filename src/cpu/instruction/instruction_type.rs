@@ -65,8 +65,8 @@ impl TypeInstruction for ITypeInstruction {
         Self {
             rd: parse_rd(instruction),
             funct3: parse_funct3(instruction),
-            rs1: (instruction >> 15 & 0x1F) as usize,
-            imm: (instruction >> 20 & 0x7FF) as u16,
+            rs1: get_from_instruction!(instruction, 5, 15, usize),
+            imm: get_from_instruction!(instruction, 12, 20, u16),
         }
     }
 }

@@ -1,5 +1,3 @@
-use crate::utils::{into_two_complement_64, parse_two_complement_64};
-
 use super::Cpu;
 
 impl Cpu {
@@ -16,11 +14,6 @@ impl Cpu {
         Ok(self.registers[register - 1])
     }
 
-    // TODO I'm not sure if this function works
-    pub fn read_register_signed(&self, register: usize) -> Result<i64, ()> {
-        Ok(parse_two_complement_64(self.read_register(register)?))
-    }
-
     /// Write the value `value` in the `register`th register
     /// Writing a value in the `register` 0 is not possible
     pub fn write_register(&mut self, register: usize, value: u64) -> Result<(), ()> {
@@ -32,10 +25,5 @@ impl Cpu {
             self.registers[register - 1] = value;
         }
         Ok(())
-    }
-
-    // TODO I'm not sure if this function works
-    pub fn write_register_signed(&mut self, register: usize, content: i64) -> Result<(), ()> {
-        self.write_register(register, into_two_complement_64(content))
     }
 }

@@ -16,6 +16,6 @@ pub fn run_x17_instruction(cpu: &mut Cpu, instruction: Instruction) -> Result<()
     let instruction = UTypeInstruction::parse_instruction(instruction);
     cpu.write_register(
         instruction.rd,
-        cpu.read_register(PC_REGISTER_INDEX)? + (instruction.imm as u64),
+        cpu.read_register(PC_REGISTER_INDEX)? + ((instruction.imm as u64) << 12),
     )
 }

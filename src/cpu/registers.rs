@@ -2,6 +2,8 @@ use crate::exception::RiscVException;
 
 use super::Cpu;
 
+pub const PC_REGISTER_INDEX: usize = 63;
+
 impl Cpu {
     /// Read the `register`th register
     /// The `register` 0 always has the value 0

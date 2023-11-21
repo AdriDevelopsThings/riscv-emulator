@@ -43,6 +43,11 @@ pub struct STypeInstruction {
     pub imm_2: u8,
 }
 
+pub struct UTypeInstruction {
+    pub rd: usize,
+    pub imm: u32,
+}
+
 pub fn parse_opcode(instruction: Instruction) -> u8 {
     // the opcode is the most right value of an instruction
     get_from_instruction!(instruction, 7, 0, u8)
@@ -99,6 +104,15 @@ impl TypeInstruction for STypeInstruction {
             rs1: get_from_instruction!(instruction, 5, 15, usize),
             rs2: get_from_instruction!(instruction, 5, 20, usize),
             imm_2: get_from_instruction!(instruction, 7, 25, u8),
+        }
+    }
+}
+
+impl TypeInstruction for UTypeInstruction {
+    fn parse_instruction(instruction: Instruction) -> Self {
+        Self {
+            rd: parse_rd(instruction),
+            imm: get_from_instruction!(instruction, 20, 12, u32),
         }
     }
 }

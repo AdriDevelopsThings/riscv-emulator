@@ -161,6 +161,12 @@ impl TypeInstruction for JTypeInstruction {
     }
 }
 
+impl STypeInstruction {
+    pub fn get_full_immediate(&self) -> u16 {
+        (self.imm_1 as u16) | ((self.imm_2 as u16) << 5)
+    }
+}
+
 impl BTypeInstruction {
     pub fn get_full_immediate(&self) -> u16 {
         (self.imm_2 as u16)

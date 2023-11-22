@@ -25,6 +25,10 @@ impl Bus {
             ram: Ram::new(ram_size, code),
         }
     }
+
+    pub fn get_ram_size(&self) -> usize {
+        self.ram.size()
+    }
 }
 
 impl BusComponent for Bus {

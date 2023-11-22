@@ -12,6 +12,7 @@ type Instruction = u32; // a riscv instruction has the size of 32 bits
 
 impl Cpu {
     pub fn new(bus: Bus) -> Self {
+        let ram_size = bus.get_ram_size() as u64;
         let mut cpu = Cpu {
             registers: [0; 63],
             bus,
@@ -19,6 +20,7 @@ impl Cpu {
         };
         // set program counter to address where the ram starts
         cpu.registers[PC_REGISTER_INDEX - 1] = RAM_BASE; // direct accessing the registers needs PC_REGISTER_INDEX to be decreased by 1
+        cpu.registers[2 - 1] = RAM_BASE + ram_size;
         cpu
     }
 

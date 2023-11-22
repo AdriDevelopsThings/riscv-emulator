@@ -12,6 +12,10 @@ impl Ram {
         ram.splice(..code.len(), code);
         Self { ram }
     }
+
+    pub fn size(&self) -> usize {
+        self.ram.len()
+    }
 }
 
 impl BusComponent for Ram {

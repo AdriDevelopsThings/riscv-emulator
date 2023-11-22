@@ -13,7 +13,7 @@ use crate::{
 /// LOAD instructions
 pub fn run_x03_instruction(cpu: &mut Cpu, instruction: Instruction) -> Result<(), RiscVException> {
     let instruction = ITypeInstruction::parse_instruction(instruction);
-    let addr = cpu.read_register(instruction.rs1)? + i12_to_u64(instruction.imm);
+    let addr = cpu.read_register(instruction.rs1)?.wrapping_add(i12_to_u64(instruction.imm));
     let width: usize = match instruction.funct3 & 0x3 {
         0x0 => 8,  // Byte
         0x1 => 16, // Halfword

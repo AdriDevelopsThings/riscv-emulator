@@ -15,6 +15,7 @@ impl Cpu {
         let mut cpu = Cpu {
             registers: [0; 63],
             bus,
+            pc_increment: true,
         };
         // set program counter to address where the ram starts
         cpu.registers[PC_REGISTER_INDEX - 1] = RAM_BASE; // direct accessing the registers needs PC_REGISTER_INDEX to be decreased by 1
@@ -30,8 +31,11 @@ impl Cpu {
         // fetch the next instruction
         let instruction = self.fetch_instruction()?;
         self.run_instruction(instruction)?;
-        // increment program counter
-        self.registers[PC_REGISTER_INDEX - 1] += 4; // direct accessing the registers needs PC_REGISTER_INDEX to be decreased by 1
+        if self.pc_increment {
+            // increment program counter
+            self.registers[PC_REGISTER_INDEX - 1] += 4; // direct accessing the registers needs PC_REGISTER_INDEX to be decreased by 1
+        }
+        self.pc_increment = true;
         Ok(())
     }
 }

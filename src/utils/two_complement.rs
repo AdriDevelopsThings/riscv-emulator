@@ -21,3 +21,11 @@ pub fn u64_to_i12(x: u64) -> u16 {
 
     val
 }
+
+pub fn i20_to_u64(x: u32) -> u64 {
+    if x & 0x080000 != 0 {
+        (x as i64 - 0x100000) as u64
+    } else {
+        x as u64
+    }
+}

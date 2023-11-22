@@ -36,7 +36,7 @@ fn run_x13_x0_instruction(
     instruction: ITypeInstruction,
 ) -> Result<(), RiscVException> {
     let imm = i12_to_u64(instruction.imm);
-    let sum = cpu.read_register(instruction.rs1)? + imm;
+    let sum = cpu.read_register(instruction.rs1)?.wrapping_add(imm);
     cpu.write_register(instruction.rd, sum)
 }
 

@@ -48,6 +48,14 @@ pub struct UTypeInstruction {
     pub imm: u32,
 }
 
+pub struct JTypeInstruction {
+    pub rd: usize,
+    pub imm_1: u8,
+    pub imm_2: u8,
+    pub imm_3: u16,
+    pub imm_4: u8,
+}
+
 pub fn parse_opcode(instruction: Instruction) -> u8 {
     // the opcode is the most right value of an instruction
     get_from_instruction!(instruction, 7, 0, u8)
@@ -114,5 +122,26 @@ impl TypeInstruction for UTypeInstruction {
             rd: parse_rd(instruction),
             imm: get_from_instruction!(instruction, 20, 12, u32),
         }
+    }
+}
+
+impl TypeInstruction for JTypeInstruction {
+    fn parse_instruction(instruction: Instruction) -> Self {
+        Self {
+            rd: parse_rd(instruction),
+            imm_1: get_from_instruction!(instruction, 8, 12, u8),
+            imm_2: get_from_instruction!(instruction, 1, 20, u8),
+            imm_3: get_from_instruction!(instruction, 10, 21, u16),
+            imm_4: get_from_instruction!(instruction, 1, 31, u8),
+        }
+    }
+}
+
+impl JTypeInstruction {
+    pub fn get_full_immediate(&self) -> u32 {
+        (self.imm_3 as u32)
+            | ((self.imm_2 as u32) << 10)
+            | ((self.imm_1 as u32) << 11)
+            | ((self.imm_4 as u32) << 19)
     }
 }

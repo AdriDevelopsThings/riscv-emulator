@@ -18,6 +18,6 @@ pub fn run_x6f_instruction(cpu: &mut Cpu, instruction: Instruction) -> Result<()
     let imm = i20_to_u64(instruction.get_full_immediate()).wrapping_mul(2);
     let new_pc = cpu.read_register(PC_REGISTER_INDEX)?.wrapping_add(imm);
     cpu.pc_increment = false;
-    cpu.write_register(PC_REGISTER_INDEX, new_pc)?;
-    cpu.write_register(instruction.rd, new_pc + 4)
+    cpu.write_register(instruction.rd, cpu.read_register(PC_REGISTER_INDEX)? + 4)?;
+    cpu.write_register(PC_REGISTER_INDEX, new_pc)
 }
